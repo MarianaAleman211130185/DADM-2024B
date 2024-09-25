@@ -9,7 +9,8 @@ const items = ref([
   { id: '5', label: '1 lata de atun' },
   { id: '6', label: '1 pcgamer' }
 ])
-const newItem = ref('')
+const newItem = ref('');
+const newItemPriority = ref('low');
 </script>
 <template>
   <h1>
@@ -17,7 +18,14 @@ const newItem = ref('')
     <i class="material-icons shopping-cart-icon">local_mall</i>
     {{ header }}
   </h1>
-  <input v-model="newItem" type="text" placeholder="Agregar Artiulo" /> {{ newItem }}
+  <input v-model="newItem" type="text" placeholder="Agregar Artiulo" /> 
+   <!--Radios Buttons-->
+   <label>
+   <input type="radio" value="low" v-model="newItemPriority">Baja
+  </label>
+  <label>
+   <input type="radio" value="high" v-model="newItemPriority">Alta
+  </label>
   <!--ul>li*3 es el lenguaje emet a usar-->
   <ul>
     <li v-for=" item in items" :key="item.id">🛒{{ item.label }}</li>
