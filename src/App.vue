@@ -9,28 +9,48 @@ const items = ref([
   { id: '5', label: '1 lata de atun' },
   { id: '6', label: '1 pcgamer' }
 ])
-const newItem = ref('');
-const newItemPriority = ref('low');
+const newItem = ref('')
+const newItemHighPriority = ref(false)
+const addItem = () => {
+  if (newItem.value.trim()) {
+    items.value.push({
+      id: items.value.length + 1,
+      label: newItem.value,
+      priority: newItemHighPriority.value ? 'high' : 'low'
+    })
+    newItem.value = ''
+    newItemHighPriority.value = false
+  }
+}
 </script>
 <template>
   <h1>
-    <!--agregamos un icono al codigo a un costado del header-->
     <i class="material-icons shopping-cart-icon">local_mall</i>
     {{ header }}
   </h1>
-  <input v-model="newItem" type="text" placeholder="Agregar Artiulo" /> 
-   <!--Radios Buttons-->
-   <label>
-   <input type="radio" value="low" v-model="newItemPriority">Baja
-  </label>
-  <label>
-   <input type="radio" value="high" v-model="newItemPriority">Alta
-  </label>
-  <!--ul>li*3 es el lenguaje emet a usar-->
+  <div>
+    <form @submit.prevent="addItem" class="add-item form">
+      <input
+        v-model.trim="newItem"
+        type="text"
+        placeholder="Add Item"
+      />
+      <label>
+        <input type="checkbox" v-model="newItemHighPriority" />
+        High Priority
+      </label>
+      <button class="btn btn-primary">
+        Save Item
+      </button>
+    </form>
+  </div>
   <ul>
-    <li v-for=" item in items" :key="item.id">🛒{{ item.label }}</li>
+    <li v-for="item in items" :key="item.id">
+      🛒{{ item.label }} ({{ item.priority }})
+    </li>
   </ul>
 </template>
+
 <style scoped>
 .shopping-cart-icon {
   font-size: 2rem;
