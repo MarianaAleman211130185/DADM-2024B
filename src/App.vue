@@ -1,58 +1,45 @@
 <script setup>
-import { ref } from 'vue'
-const header = ref('App lista de compras')
-const items = ref([
-  { id: '1', label: '10 bolillos' },
-  { id: '2', label: '1 lata de frijoles' },
-  { id: '3', label: '1 chela' },
-  { id: '4', label: '1 nutella' },
-  { id: '5', label: '1 lata de atun' },
-  { id: '6', label: '1 pcgamer' }
-])
-const newItem = ref('')
-const newItemHighPriority = ref(false)
-const addItem = () => {
-  if (newItem.value.trim()) {
-    items.value.push({
-      id: items.value.length + 1,
-      label: newItem.value,
-      priority: newItemHighPriority.value ? 'high' : 'low'
-    })
-    newItem.value = ''
-    newItemHighPriority.value = false
-  }
-}
+  import {ref} from 'vue';
+  // Modelo
+  const header = ref('App lista de compras')
+  const items = ref([
+  {id:'0', label:'10 bolillos'},
+  {id:'1', label:'1 lata frijoles'},
+  {id:'2', label:'1 chelas'},
+  {id:'3', label:'1 Nutella'},
+  ]);
+  const newItem = ref('');
+  const newItemPriority = ref('low');
 </script>
 <template>
   <h1>
     <i class="material-icons shopping-cart-icon">local_mall</i>
     {{ header }}
   </h1>
-  <div>
-    <form @submit.prevent="addItem" class="add-item form">
-      <input
-        v-model.trim="newItem"
-        type="text"
-        placeholder="Add Item"
-      />
+  <!-- Agrupando Entradas de usuario -->
+   <form class="add-item form" v-on:submit.prevent="items.push({id: items.length + 1, label:newItem})"> 
+    <!-- Entrada de texto--> 
+    <input 
+      v-model.trim="newItem" 
+      type="text" 
+      placeholder="Agregar articulo">
+    <!-- Radio Buttos -->
       <label>
-        <input type="checkbox" v-model="newItemHighPriority" />
-        High Priority
+        <input type="radio" value="low" v-model="newItemPriority">
+        Alta Prioridad
       </label>
-      <button class="btn btn-primary">
-        Save Item
-      </button>
-    </form>
-  </div>
+    <!-- Boton -->
+    <button class="btn btn-primary">
+      Salvar Articulo
+    </button>
+   </form>
+   <!-- Lista -->
   <ul>
-    <li v-for="item in items" :key="item.id">
-      🛒{{ item.label }} ({{ item.priority }})
-    </li>
+    <li v-for="item in items" v-bind:key="item.id"> 🛒 {{ item.label }} </li>
   </ul>
 </template>
-
 <style scoped>
-.shopping-cart-icon {
+.shopping-cart-icon{
   font-size: 2rem;
 }
 </style>
