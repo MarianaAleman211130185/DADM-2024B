@@ -3,13 +3,19 @@
   // Modelo
   const header = ref('App lista de compras')
   const items = ref([
+  //---Items------
+  //Item-Model
   {id:'0', label:'10 bolillos'},
   {id:'1', label:'1 lata frijoles'},
   {id:'2', label:'1 chelas'},
   {id:'3', label:'1 Nutella'},
   ]);
+   // Item-Method
+  const saveItems = () => { items.value.push({id: items.value.length + 1, label: newItem.value}); 
+  // clean the input
+    newItem.value = '';};
   const newItem = ref('');
-  const newItemPriority = ref('low');
+  const newItemPriority = ref('false');
 </script>
 <template>
   <h1>
@@ -17,12 +23,12 @@
     {{ header }}
   </h1>
   <!-- Agrupando Entradas de usuario -->
-   <form class="add-item form" v-on:submit.prevent="items.push({id: items.length + 1, label:newItem})"> 
+   <form class="add-item form" v-on:submit.prevent= "saveItems()"> 
     <!-- Entrada de texto--> 
-    <input 
-      v-model.trim="newItem" 
+    <input  
       type="text" 
-      placeholder="Agregar articulo">
+      placeholder="Agregar articulo"
+      v-model.trim="newItem">
     <!-- Radio Buttos -->
       <label>
         <input type="radio" value="low" v-model="newItemPriority">
@@ -35,7 +41,7 @@
    </form>
    <!-- Lista -->
   <ul>
-    <li v-for="item in items" v-bind:key="item.id"> 🛒 {{ item.label }} </li>
+    <li v-for="item in items" v-bind:key="item.id">🛒{{ item.label }} </li>
   </ul>
 </template>
 <style scoped>
