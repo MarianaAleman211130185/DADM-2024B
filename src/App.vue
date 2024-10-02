@@ -16,14 +16,20 @@
     newItem.value = '';};
   const newItem = ref('');
   const newItemPriority = ref('false');
+  const editing = ref(true);
+  const activateEdition =(activate) => { editing.value = activate; }
 </script>
 <template>
-  <h1>
+  <div class="header">
+    <h1>
     <i class="material-icons shopping-cart-icon">local_mall</i>
     {{ header }}
   </h1>
+  <button v-if="editing" class="btn" @click="activateEdition(false)">Cancelar</button>
+  <button v-else class="btn btn-primary" @click="activateEdition(true)">Agregar Articulo</button>
+  </div>
   <!-- Agrupando Entradas de usuario -->
-   <form class="add-item form" v-on:submit.prevent= "saveItems()"> 
+   <form class="add-item form" v-if="editing" v-on:submit.prevent= "saveItems()"> 
     <!-- Entrada de texto--> 
     <input  
       type="text" 
@@ -43,6 +49,7 @@
   <ul>
     <li v-for="item in items" v-bind:key="item.id">🛒{{ item.label }} </li>
   </ul>
+  <p v-if="items.length===0">🥀 NO HAY ELEMENTOS AGREGADOS </p>
 </template>
 <style scoped>
 .shopping-cart-icon{
