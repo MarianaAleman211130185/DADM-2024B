@@ -46,12 +46,19 @@ const activateEdition = (activate) => {
     :disabled="newItem.length === 0"
     class="btn btn-primary">Salvar Articulo</button>
   </form>
-  <!-- Lista -->
+  <!-- Listas-->
   <ul>
     <li v-for="{label, id, purchased, priority} in items" 
     :key="id"
-    class="amazing"
-    :class="{ strikeout: purchased, priority: priority, }">
+    :class="{ strikeout: purchased, priority: priority}">
+    {{ priority ? "🔥" : "🛒" }} {{ label }}
+  </li>
+  </ul>
+  <!-- Listas clases como arreglos-->
+  <ul>
+    <li v-for="{label, id, purchased, priority} in items" 
+    :key="id"
+    :class="[purchased ? 'strikeout': '', priority ? 'priority':'']">
     {{ priority ? "🔥" : "🛒" }} {{ label }}
   </li>
   </ul>
