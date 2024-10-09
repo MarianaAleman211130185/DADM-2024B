@@ -5,10 +5,10 @@ const header = ref('App lista de compras')
 const items = ref([
   //---Items------
   //Item-Model
-  { id: '0', label: '10 bolillos' },
-  { id: '1', label: '1 lata frijoles' },
-  { id: '2', label: '1 chelas' },
-  { id: '3', label: '1 Nutella' }
+  { id: '0', label: '10 bolillos', purchased: false, priority: false},
+  { id: '1', label: '1 lata frijoles', purchased: true, priority: true},
+  { id: '2', label: '1 chelas' , purchased: false, priority: false},
+  { id: '3', label: '1 Nutella', purchased: true, priority: true}
 ])
 // Item-Method
 const saveItems = () => {
@@ -48,7 +48,12 @@ const activateEdition = (activate) => {
   </form>
   <!-- Lista -->
   <ul>
-    <li v-for="item in items" v-bind:key="item.id">🛒{{ item.label }}</li>
+    <li v-for="{label, id, purchased, priority} in items" 
+    :key="id"
+    class="amazing"
+    :class="{ strikeout: purchased, priority: priority, }">
+    {{ priority ? "🔥" : "🛒" }} {{ label }}
+  </li>
   </ul>
   <p v-if="items.length === 0">🥀 NO HAY ELEMENTOS AGREGADOS</p>
 </template>
