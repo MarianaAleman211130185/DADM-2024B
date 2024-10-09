@@ -1,58 +1,59 @@
 <script setup>
-  import {ref} from 'vue';
-  // Modelo
-  const header = ref('App lista de compras')
-  const items = ref([
+import { ref } from 'vue'
+// Modelo
+const header = ref('App lista de compras')
+const items = ref([
   //---Items------
   //Item-Model
-  {id:'0', label:'10 bolillos'},
-  {id:'1', label:'1 lata frijoles'},
-  {id:'2', label:'1 chelas'},
-  {id:'3', label:'1 Nutella'},
-  ]);
-   // Item-Method
-  const saveItems = () => { items.value.push({id: items.value.length + 1, label: newItem.value}); 
+  { id: '0', label: '10 bolillos' },
+  { id: '1', label: '1 lata frijoles' },
+  { id: '2', label: '1 chelas' },
+  { id: '3', label: '1 Nutella' }
+])
+// Item-Method
+const saveItems = () => {
+  items.value.push({ id: items.value.length + 1, label: newItem.value })
   // clean the input
-    newItem.value = '';};
-  const newItem = ref('');
-  const newItemPriority = ref('false');
-  const editing = ref(true);
-  const activateEdition =(activate) => { editing.value = activate; }
+  newItem.value = ''
+}
+const newItem = ref('')
+const newItemPriority = ref('false')
+const editing = ref(true)
+const activateEdition = (activate) => {
+  editing.value = activate
+}
 </script>
 <template>
   <div class="header">
     <h1>
-    <i class="material-icons shopping-cart-icon">local_mall</i>
-    {{ header }}
-  </h1>
-  <button v-if="editing" class="btn" @click="activateEdition(false)">Cancelar</button>
-  <button v-else class="btn btn-primary" @click="activateEdition(true)">Agregar Articulo</button>
+      <i class="material-icons shopping-cart-icon">local_mall</i>
+      {{ header }} <span style="color: blue">{{ newItemPriority }}</span>
+    </h1>
+    <button v-if="editing" class="btn" @click="activateEdition(false)">Cancelar</button>
+    <button v-else class="btn btn-primary" @click="activateEdition(true)">Agregar Articulo</button>
   </div>
   <!-- Agrupando Entradas de usuario -->
-   <form class="add-item form" v-if="editing" v-on:submit.prevent= "saveItems()"> 
-    <!-- Entrada de texto--> 
-    <input  
-      type="text" 
-      placeholder="Agregar articulo"
-      v-model.trim="newItem">
+  <form class="add-item form" v-if="editing" v-on:submit.prevent="saveItems()">
+    <!-- Entrada de texto-->
+    <input type="text" placeholder="Agregar articulo" v-model.trim="newItem" />
     <!-- Radio Buttos -->
-      <label>
-        <input type="radio" value="low" v-model="newItemPriority">
-        Alta Prioridad
-      </label>
+    <label>
+      <input type="radio" value="low" v-model="newItemPriority" />
+      Alta Prioridad
+    </label>
     <!-- Boton -->
-    <button class="btn btn-primary">
-      Salvar Articulo
-    </button>
-   </form>
-   <!-- Lista -->
+    <button 
+    :disabled="newItem.length === 0"
+    class="btn btn-primary">Salvar Articulo</button>
+  </form>
+  <!-- Lista -->
   <ul>
-    <li v-for="item in items" v-bind:key="item.id">🛒{{ item.label }} </li>
+    <li v-for="item in items" v-bind:key="item.id">🛒{{ item.label }}</li>
   </ul>
-  <p v-if="items.length===0">🥀 NO HAY ELEMENTOS AGREGADOS </p>
+  <p v-if="items.length === 0">🥀 NO HAY ELEMENTOS AGREGADOS</p>
 </template>
 <style scoped>
-.shopping-cart-icon{
+.shopping-cart-icon {
   font-size: 2rem;
 }
 </style>
