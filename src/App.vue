@@ -22,10 +22,15 @@ const editing = ref(true)
 const activateEdition = (activate) => {
   editing.value = activate
 }
+// Creando una propiedad computada
+const characterCount = computed(() => {
+  // Toda propiedad computada debe regresar un valor
+  return newItem.value.length
+})
 // Alternando estado de compra del item
 const togglePurchased = (item) => {
-  item.purchased = !item.purchased;
-};
+  item.purchased = !item.purchased
+}
 </script>
 <template>
   <div class="header">
@@ -38,6 +43,10 @@ const togglePurchased = (item) => {
   </div>
   <!-- Agrupando Entradas de usuario -->
   <form class="add-item form" v-if="editing" v-on:submit.prevent="saveItems()">
+  <!-- Contador -->
+    <p class="counter">
+      {{ characterCount }} / 200
+    </p>
     <!-- Entrada de texto-->
     <input type="text" placeholder="Agregar articulo" v-model.trim="newItem" />
     <!-- Radio Buttos -->
@@ -49,20 +58,11 @@ const togglePurchased = (item) => {
     <button :disabled="newItem.length === 0" class="btn btn-primary">Salvar Articulo</button>
   </form>
   <!-- Listas-->
- <ul>
-  <li
-    v-for="{ label, id, purchased, priority } in items"
-    :key="id"
-    :class="{ strikeout: purchased, priority: priority }">
-    {{ priority ? '🔥' : '🛒' }} {{ label }}
-  </li>
-</ul>
-  <!-- Listas clases como arreglos-->
   <ul>
     <li
       v-for="{ label, id, purchased, priority } in items"
       :key="id"
-      :class="[purchased ? 'strikeout' : '', priority ? 'priority' : '']"
+      :class="{ strikeout: purchased, priority: priority }"
     >
       {{ priority ? '🔥' : '🛒' }} {{ label }}
     </li>
@@ -78,8 +78,7 @@ const togglePurchased = (item) => {
       ⚜ {{ label }}
     </li>
   </ul>
-  <ul>
-  </ul>
+  <ul></ul>
   <p v-if="items.length === 0">🥀 NO HAY ELEMENTOS AGREGADOS</p>
 </template>
 <style scoped>
