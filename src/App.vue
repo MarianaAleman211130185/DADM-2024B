@@ -22,11 +22,6 @@ const editing = ref(true)
 const activateEdition = (activate) => {
   editing.value = activate
 }
-// Creando una propiedad computada
-const characterCount = computed(() => {
-  // Toda propiedad computada debe regresar un valor
-  return newItem.value.length
-})
 // Alternando estado de compra del item
 const togglePurchased = (item) => {
   item.purchased = !item.purchased
@@ -43,10 +38,6 @@ const togglePurchased = (item) => {
   </div>
   <!-- Agrupando Entradas de usuario -->
   <form class="add-item form" v-if="editing" v-on:submit.prevent="saveItems()">
-  <!-- Contador -->
-    <p class="counter">
-      {{ characterCount }} / 200
-    </p>
     <!-- Entrada de texto-->
     <input type="text" placeholder="Agregar articulo" v-model.trim="newItem" />
     <!-- Radio Buttos -->
