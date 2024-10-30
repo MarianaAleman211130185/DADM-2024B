@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+
 // Modelo
 const header = ref('App lista de compras')
 const items = ref([
@@ -10,10 +11,11 @@ const items = ref([
   { id: '2', label: '1 chelas', purchased: false, priority: false },
   { id: '3', label: '1 Nutella', purchased: true, priority: true }
 ])
+
 // Item-Method
 const saveItems = () => {
   items.value.push({ id: items.value.length + 1, label: newItem.value })
-  // clean the input
+  // Limpiar la entrada
   newItem.value = ''
 }
 const newItem = ref('')
@@ -26,7 +28,13 @@ const activateEdition = (activate) => {
 const togglePurchased = (item) => {
   item.purchased = !item.purchased
 }
+
+// Propiedad computada para contar caracteres de entrada
+const characterCount = computed(() => {
+  return newItem.value.length
+})
 </script>
+
 <template>
   <div class="header">
     <h1>
@@ -36,11 +44,16 @@ const togglePurchased = (item) => {
     <button v-if="editing" class="btn" @click="activateEdition(false)">Cancelar</button>
     <button v-else class="btn btn-primary" @click="activateEdition(true)">Agregar Articulo</button>
   </div>
+
   <!-- Agrupando Entradas de usuario -->
   <form class="add-item form" v-if="editing" v-on:submit.prevent="saveItems()">
     <!-- Entrada de texto-->
     <input type="text" placeholder="Agregar articulo" v-model.trim="newItem" />
-    <!-- Radio Buttos -->
+    <!-- Contador -->
+    <p class="counter">
+      {{ characterCount }} / 200
+    </p>
+    <!-- Radio Buttons -->
     <label>
       <input type="radio" value="low" v-model="newItemPriority" />
       Alta Prioridad
@@ -49,16 +62,6 @@ const togglePurchased = (item) => {
     <button :disabled="newItem.length === 0" class="btn btn-primary">Salvar Articulo</button>
   </form>
   <!-- Listas-->
-  <ul>
-    <li
-      v-for="{ label, id, purchased, priority } in items"
-      :key="id"
-      :class="{ strikeout: purchased, priority: priority }"
-    >
-      {{ priority ? '🔥' : '🛒' }} {{ label }}
-    </li>
-  </ul>
-  <!-- Lista -->
   <ul>
     <li
       v-for="({ id, label, purchased }, index) in items"
@@ -72,8 +75,13 @@ const togglePurchased = (item) => {
   <ul></ul>
   <p v-if="items.length === 0">🥀 NO HAY ELEMENTOS AGREGADOS</p>
 </template>
+
 <style scoped>
 .shopping-cart-icon {
   font-size: 2rem;
+}
+.counter {
+  font-size: 0.9rem;
+  color: #666;
 }
 </style>
