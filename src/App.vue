@@ -28,13 +28,13 @@ const activateEdition = (activate) => {
 const togglePurchased = (item) => {
   item.purchased = !item.purchased
 }
-
 // Propiedad computada para contar caracteres de entrada
 const characterCount = computed(() => {
   return newItem.value.length
 })
+// Creando propiedad computada que invierte items de la lista
+const reversedItems = computed(() => [...items.value].reverse())
 </script>
-
 <template>
   <div class="header">
     <h1>
@@ -44,7 +44,6 @@ const characterCount = computed(() => {
     <button v-if="editing" class="btn" @click="activateEdition(false)">Cancelar</button>
     <button v-else class="btn btn-primary" @click="activateEdition(true)">Agregar Articulo</button>
   </div>
-
   <!-- Agrupando Entradas de usuario -->
   <form class="add-item form" v-if="editing" v-on:submit.prevent="saveItems()">
     <!-- Entrada de texto-->
@@ -64,18 +63,16 @@ const characterCount = computed(() => {
   <!-- Listas-->
   <ul>
     <li
-      v-for="({ id, label, purchased }, index) in items"
-      @click="togglePurchased(items[index])"
-      v-bind:key="id"
+      v-for="({ id, label, purchased }, index) in reversedItems"
+      @click="togglePurchased(reversedItems[index])"
+      :key="id"
       :class="{ strikeout: purchased, priority: highPriority }"
     >
       ⚜ {{ label }}
     </li>
   </ul>
-  <ul></ul>
   <p v-if="items.length === 0">🥀 NO HAY ELEMENTOS AGREGADOS</p>
 </template>
-
 <style scoped>
 .shopping-cart-icon {
   font-size: 2rem;
