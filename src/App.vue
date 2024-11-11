@@ -1,11 +1,11 @@
 <script setup>
-import PlanPicker from './components/PlanPicker.vue'; 
+import PlanPicker from './components/PlanPicker.vue';
 </script>
 <template>
   <header>
-    <div style="text-align: center">
+    <div style="text-align: center;">
       <span id="logo">ITGAM BOX EXPERIENCES</span>
-      <img src="./assets/logo.png" alt="logo" />
+      <img src="./assets/logo.png" alt="logo">
     </div>
   </header>
   <div class="content">
@@ -13,10 +13,12 @@ import PlanPicker from './components/PlanPicker.vue';
     <h2 class="subtitle">
       Viajamos por el mundo para encontrar el mejor café de origen único para ti
     </h2>
-    <PlanPicker />
-  </div>
+    <PlanPicker></PlanPicker>
+<!-- TODO  --> 
+    </div>
 </template>
 <style scoped>
+
 header {
   line-height: 1.5;
 }
