@@ -33,6 +33,7 @@ emit('select', props.name);
 const isSelected = computed(()=>{
   return props.name === props.selectPlan;
 });
+
 </script>
 <style scoped>
 
