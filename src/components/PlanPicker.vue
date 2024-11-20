@@ -18,7 +18,7 @@ const selectPlan =(name) => {
       :select-plan="selectedPlan"
       />
     </div>
-    <p>{{ selectedPlan }}</p>
+
 </template>
 <style scoped>
 </style>
